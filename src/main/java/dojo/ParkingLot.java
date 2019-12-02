@@ -15,12 +15,16 @@ public class ParkingLot {
 
     public Ticket park(Car car) throws ParkingLotFullException {
         Ticket ticket = new Ticket();
-        if (parkedCars.size() >= space) {
+        if (isParkingLotFull()) {
             throw new ParkingLotFullException();
         }
         parkedCars.put(ticket, car);
 
         return ticket;
+    }
+
+    private boolean isParkingLotFull() {
+        return parkedCars.size() >= space;
     }
 
     public Car pick(Ticket ticket) throws TicketInvalidException {
