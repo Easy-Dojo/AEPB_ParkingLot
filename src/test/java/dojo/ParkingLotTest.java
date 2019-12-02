@@ -6,6 +6,8 @@ import dojo.exception.TicketInvalidException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 public class ParkingLotTest {
     @Test
@@ -71,5 +73,14 @@ public class ParkingLotTest {
         parkingLot.park(new Car());
 
         Assertions.assertThrows(TicketInvalidException.class, () -> parkingLot.pick(new Ticket()));
+    }
+
+    @Test
+    void test_should_fail_when_pick_twice_given_parking_lot_with_cars_parked_in() throws TicketInvalidException, ParkingLotFullException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        Ticket ticket = parkingLot.park(new Car());
+        parkingLot.pick(ticket);
+
+        assertThrows(TicketInvalidException.class, () -> parkingLot.pick(ticket));
     }
 }

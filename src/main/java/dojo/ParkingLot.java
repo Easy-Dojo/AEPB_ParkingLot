@@ -25,7 +25,7 @@ public class ParkingLot {
 
     public Car pick(Ticket ticket) throws TicketInvalidException {
         if (parkedCars.containsKey(ticket)) {
-            return parkedCars.get(ticket);
+            return parkedCars.remove(ticket);
         }
 
         throw new TicketInvalidException();
