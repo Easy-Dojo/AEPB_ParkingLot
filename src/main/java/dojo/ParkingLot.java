@@ -1,6 +1,7 @@
 package dojo;
 
 import dojo.exception.ParkingLotFullException;
+import dojo.exception.TicketInvalidException;
 
 import java.util.HashMap;
 
@@ -22,7 +23,11 @@ public class ParkingLot {
         return ticket;
     }
 
-    public Car pick(Ticket ticket) {
-        return parkedCars.get(ticket);
+    public Car pick(Ticket ticket) throws TicketInvalidException {
+        if (parkedCars.containsKey(ticket)) {
+            return parkedCars.get(ticket);
+        }
+
+        throw new TicketInvalidException();
     }
 }

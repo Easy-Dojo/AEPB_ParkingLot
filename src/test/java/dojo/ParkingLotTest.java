@@ -2,10 +2,10 @@ package dojo;
 
 
 import dojo.exception.ParkingLotFullException;
+import dojo.exception.TicketInvalidException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class ParkingLotTest {
     @Test
@@ -39,7 +39,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    void test_should_pick_my_car_when_pick_given_parking_lot_with_only_my_car_parked_in() throws ParkingLotFullException {
+    void test_should_pick_my_car_when_pick_given_parking_lot_with_only_my_car_parked_in() throws ParkingLotFullException, TicketInvalidException {
         ParkingLot parkingLot = new ParkingLot(1);
         Car myCar = new Car();
 
@@ -47,6 +47,29 @@ public class ParkingLotTest {
 
         Car pickedCar = parkingLot.pick(ticket);
 
-        assertSame(myCar, pickedCar);
+        Assertions.assertSame(myCar, pickedCar);
+    }
+
+    @Test
+    void test_should_pick_my_car_when_pick_given_parking_lot_with_multiple_cars_parked_in() throws ParkingLotFullException, TicketInvalidException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        Car myCar = new Car();
+        Car otherCar = new Car();
+
+        Ticket myTicket = parkingLot.park(myCar);
+        parkingLot.park(otherCar);
+
+        Car pickedCar = parkingLot.pick(myTicket);
+
+        Assertions.assertSame(myCar, pickedCar);
+        Assertions.assertNotSame(otherCar, pickedCar);
+    }
+
+    @Test
+    void test_should_fail_when_pick_with_invalid_ticket_given_parking_lot_with_cars_parked_in() throws ParkingLotFullException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        parkingLot.park(new Car());
+
+        Assertions.assertThrows(TicketInvalidException.class, () -> parkingLot.pick(new Ticket()));
     }
 }
