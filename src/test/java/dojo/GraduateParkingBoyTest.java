@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /*
-Given 有两个停车场，第一个满了，第二个有足够的空车位
-When 连续多辆车
-Then 多辆车都停在第二个停车场上
-
 Given 有两个停车场，两个停车场车位都满了
 When 停车
 Then 停车失败
@@ -78,5 +74,22 @@ public class GraduateParkingBoyTest {
         Assertions.assertEquals(parkingLot1.pick(ticketForCar1), car1);
         Assertions.assertEquals(parkingLot1.pick(ticketForCar2), car2);
         Assertions.assertEquals(parkingLot2.pick(ticketForCar3), car3);
+    }
+
+    @Test
+    void test_should_park_into_second_when_park_multiple_cars_given_first_is_full_second_with_enough_space() throws TicketInvalidException, ParkingLotFullException {
+        ParkingLot parkingLot1 = new ParkingLot(0);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+        GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy(parkingLot1, parkingLot2);
+
+        Car car1 = new Car();
+        Car car2 = new Car();
+        Ticket ticketForCar1 = graduateParkingBoy.park(car1);
+        Ticket ticketForCar2 = graduateParkingBoy.park(car2);
+
+        Assertions.assertNotNull(ticketForCar1);
+        Assertions.assertNotNull(ticketForCar2);
+        Assertions.assertEquals(parkingLot2.pick(ticketForCar1), car1);
+        Assertions.assertEquals(parkingLot2.pick(ticketForCar2), car2);
     }
 }
