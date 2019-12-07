@@ -23,7 +23,7 @@ public class ParkingLot {
         return ticket;
     }
 
-    private boolean isParkingLotFull() {
+    public boolean isParkingLotFull() {
         return parkedCars.size() >= space;
     }
 
