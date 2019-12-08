@@ -7,10 +7,6 @@ import org.junit.jupiter.api.Test;
 
 /*
 Given 停了我的车的停车场
-When 用一张无效的票取车
-Then 取车失败
-
-Given 停了我的车的停车场
 When 用同一张票取车两次
 Then 第二次取车失败
  */
@@ -110,9 +106,21 @@ public class GraduateParkingBoyTest {
 
         Car myCar = new Car();
         Car otherCar = new Car();
-        Ticket otherTicket = graduateParkingBoy.park(otherCar);
+        graduateParkingBoy.park(otherCar);
         Ticket myTicket = graduateParkingBoy.park(myCar);
 
         Assertions.assertEquals(myCar, graduateParkingBoy.pick(myTicket));
+    }
+
+    @Test
+    void test_should_pick_fail_when_pick__my_car_with_others_ticket_given_parking_lots_park_my_car() throws ParkingLotFullException {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy(parkingLot1, parkingLot2);
+
+        Car myCar = new Car();
+        graduateParkingBoy.park(myCar);
+
+        Assertions.assertThrows(TicketInvalidException.class, () -> graduateParkingBoy.pick(new Ticket()));
     }
 }
