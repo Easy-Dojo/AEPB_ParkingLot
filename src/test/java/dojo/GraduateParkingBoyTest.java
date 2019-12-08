@@ -5,12 +5,6 @@ import dojo.exception.TicketInvalidException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-/*
-Given 停了我的车的停车场
-When 用同一张票取车两次
-Then 第二次取车失败
- */
-
 public class GraduateParkingBoyTest {
     @Test
     void test_should_return_a_ticket_when_park_a_car_given_a_parking_lot_with_a_space() throws ParkingLotFullException {
@@ -113,7 +107,7 @@ public class GraduateParkingBoyTest {
     }
 
     @Test
-    void test_should_pick_fail_when_pick__my_car_with_others_ticket_given_parking_lots_park_my_car() throws ParkingLotFullException {
+    void test_should_pick_fail_when_pick_my_car_with_others_ticket_given_parking_lots_park_my_car() throws ParkingLotFullException {
         ParkingLot parkingLot1 = new ParkingLot(1);
         ParkingLot parkingLot2 = new ParkingLot(1);
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy(parkingLot1, parkingLot2);
@@ -122,5 +116,18 @@ public class GraduateParkingBoyTest {
         graduateParkingBoy.park(myCar);
 
         Assertions.assertThrows(TicketInvalidException.class, () -> graduateParkingBoy.pick(new Ticket()));
+    }
+
+    @Test
+    void test_should_pick_fail_when_pick_my_car_twice_given_parking_lots_park_my_car() throws ParkingLotFullException, TicketInvalidException {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy(parkingLot1, parkingLot2);
+
+        Car myCar = new Car();
+        Ticket myTicket = graduateParkingBoy.park(myCar);
+
+        Assertions.assertEquals(myCar, graduateParkingBoy.pick(myTicket));
+        Assertions.assertThrows(TicketInvalidException.class, () -> graduateParkingBoy.pick(myTicket));
     }
 }
