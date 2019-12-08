@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 /*
-Given 停车场只停了我的车
-When 用我的停车票取车
-Then 取走我的车
-
 Given 停车场停了多辆车，也有我的车
 When 用我的停车票取车
 Then 取出我的车
@@ -96,5 +92,17 @@ public class GraduateParkingBoyTest {
         GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy(parkingLot1, parkingLot2);
 
         Assertions.assertThrows(ParkingLotFullException.class, () -> graduateParkingBoy.park(new Car()));
+    }
+
+    @Test
+    void test_should_pick_my_car_when_pick_car_given_parking_lots_only_park_my_car() throws ParkingLotFullException, TicketInvalidException {
+        ParkingLot parkingLot1 = new ParkingLot(1);
+        ParkingLot parkingLot2 = new ParkingLot(1);
+        GraduateParkingBoy graduateParkingBoy = new GraduateParkingBoy(parkingLot1, parkingLot2);
+
+        Car myCar = new Car();
+        Ticket myTicket = graduateParkingBoy.park(myCar);
+
+        Assertions.assertEquals(myCar, graduateParkingBoy.pick(myTicket));
     }
 }

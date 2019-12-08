@@ -13,6 +13,10 @@ public class ParkingLot {
         this.space = space;
     }
 
+    public HashMap<Ticket, Car> getParkedCars() {
+        return parkedCars;
+    }
+
     public Ticket park(Car car) throws ParkingLotFullException {
         Ticket ticket = new Ticket();
         if (isParkingLotFull()) {
