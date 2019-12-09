@@ -53,4 +53,27 @@ class SmartParkingBoyTest {
         assertSame(car, parkingLot2.pick(ticket));
     }
 
+
+    @Test
+    void test_should_park_into_both_exchanged_when_park_multiple_cars_given_two_parking_lots_with_same_spaces() throws TicketInvalidException, ParkingLotFullException {
+        ParkingLot parkingLot1 = new ParkingLot(3);
+        ParkingLot parkingLot2 = new ParkingLot(3);
+
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
+        Car car1 = new Car();
+        Car car2 = new Car();
+        Car car3 = new Car();
+        Car car4 = new Car();
+
+        Ticket ticket1 = parkingBoy.park(car1);
+        Ticket ticket2 = parkingBoy.park(car2);
+        Ticket ticket3 = parkingBoy.park(car3);
+        Ticket ticket4 = parkingBoy.park(car4);
+
+        assertSame(car1, parkingLot1.pick(ticket1));
+        assertSame(car2, parkingLot2.pick(ticket2));
+        assertSame(car3, parkingLot1.pick(ticket3));
+        assertSame(car4, parkingLot2.pick(ticket4));
+    }
+
 }
