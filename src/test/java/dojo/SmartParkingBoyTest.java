@@ -100,4 +100,60 @@ class SmartParkingBoyTest {
 
         assertSame(myCar, parkingBoy.pick(ticket));
     }
+
+    @Test
+    void test_should_pick_my_car_from_first_when_pick_with_my_ticket_given_multiple_parking_lot_with_cars_parked() throws ParkingLotFullException, TicketInvalidException {
+        ParkingLot parkingLot1 = new ParkingLot(2);
+        ParkingLot parkingLot2 = new ParkingLot(2);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
+
+        Car myCar = new Car();
+        Ticket ticket = parkingBoy.park(myCar);
+
+        parkingBoy.park(new Car());
+
+        assertSame(myCar, parkingBoy.pick(ticket));
+    }
+
+    @Test
+    void test_should_pick_my_car_from_second_when_pick_with_my_ticket_given_multiple_parking_lot_with_cars_parked() throws ParkingLotFullException, TicketInvalidException {
+        ParkingLot parkingLot1 = new ParkingLot(2);
+        ParkingLot parkingLot2 = new ParkingLot(2);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
+        parkingBoy.park(new Car());
+
+        Car myCar = new Car();
+        Ticket ticket = parkingBoy.park(myCar);
+
+        assertSame(myCar, parkingBoy.pick(ticket));
+    }
+
+
+    @Test
+    void test_should_fail_when_pick_with_null_ticket_given_parking_lot_with_cars_parked_in() throws ParkingLotFullException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot);
+        parkingBoy.park(new Car());
+        assertThrows(TicketInvalidException.class, () -> parkingBoy.pick(null));
+    }
+
+    @Test
+    void test_should_fail_when_pick_with_invalid_ticket_given_parking_lot_with_cars_parked_in() throws ParkingLotFullException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot);
+        parkingBoy.park(new Car());
+
+        assertThrows(TicketInvalidException.class, () -> parkingBoy.pick(new Ticket()));
+    }
+
+    @Test
+    void test_should_fail_when_pick_twice_given_parking_lot_with_cars_parked_in() throws TicketInvalidException, ParkingLotFullException {
+        ParkingLot parkingLot = new ParkingLot(2);
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot);
+        Ticket ticket = parkingBoy.park(new Car());
+
+        parkingBoy.pick(ticket);
+
+        assertThrows(TicketInvalidException.class, () -> parkingBoy.pick(ticket));
+    }
 }
