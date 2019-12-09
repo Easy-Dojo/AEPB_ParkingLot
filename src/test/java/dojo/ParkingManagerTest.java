@@ -141,4 +141,16 @@ class ParkingManagerTest {
         assertThrows(TicketInvalidException.class, () -> parkingManager.pick(new Ticket()));
         assertThrows(TicketInvalidException.class, () -> parkingManager.pick(null));
     }
+
+    @Test
+    void test_should_throw_exception_when_pick_with_invalid_ticket_given_parking_boy_whose_parking_lot_contains_my_car() throws ParkingLotFullException {
+        ParkingLot parkingLot = new ParkingLot(1);
+        parkingLot.park(new Car());
+        ParkingAble superParkingBoy = new SuperParkingBoy(parkingLot);
+
+        ParkingManager parkingManager = new ParkingManager(superParkingBoy);
+
+        assertThrows(TicketInvalidException.class, () -> parkingManager.pick(new Ticket()));
+        assertThrows(TicketInvalidException.class, () -> parkingManager.pick(null));
+    }
 }

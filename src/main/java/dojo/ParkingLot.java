@@ -28,6 +28,7 @@ public class ParkingLot implements ParkingAble {
         return parkedCars.size() >= space;
     }
 
+    @Override
     public Car pick(Ticket ticket) throws TicketInvalidException {
         if (contains(ticket)) {
             return parkedCars.remove(ticket);
