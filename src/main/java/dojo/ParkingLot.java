@@ -16,16 +16,12 @@ public class ParkingLot implements ParkingAble {
     @Override
     public Ticket park(Car car) throws ParkingLotFullException {
         Ticket ticket = new Ticket();
-        if (isParkingLotFull()) {
+        if (isFull()) {
             throw new ParkingLotFullException();
         }
         parkedCars.put(ticket, car);
 
         return ticket;
-    }
-
-    public boolean isParkingLotFull() {
-        return parkedCars.size() >= space;
     }
 
     @Override

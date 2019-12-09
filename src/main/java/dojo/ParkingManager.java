@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ParkingManager extends GraduateParkingBoy {
+public class ParkingManager extends ParkingBoy {
     private List<ParkingAble> parkingAbleList = new ArrayList<>();
 
     public ParkingManager(ParkingAble... parkingAbles) {
