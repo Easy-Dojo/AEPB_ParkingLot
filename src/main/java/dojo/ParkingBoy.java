@@ -24,12 +24,10 @@ public abstract class ParkingBoy implements ParkingAble {
     }
 
     @Override
-    public Car pick(Ticket myTicket) throws TicketInvalidException {
-        for (ParkingLot parkingLot : parkingLotList) {
-            if (parkingLot.contains(myTicket)) {
-                return parkingLot.pick(myTicket);
-            }
-        }
-        throw new TicketInvalidException();
+    public Car pick(Ticket ticket) throws TicketInvalidException {
+        return parkingLotList.stream()
+                .filter(parkingLot -> parkingLot.contains(ticket))
+                .findFirst()
+                .orElseThrow(TicketInvalidException::new).pick(ticket);
     }
 }

@@ -16,21 +16,17 @@ public class ParkingManager extends ParkingBoy {
 
     @Override
     public Ticket park(Car car) throws ParkingLotFullException {
-        for (ParkingAble parkingAble : parkingAbleList) {
-            if (!parkingAble.isFull()) {
-                return parkingAble.park(car);
-            }
-        }
-        throw new ParkingLotFullException();
+        return parkingAbleList.stream()
+                .filter(parkingAble -> !parkingAble.isFull())
+                .findFirst()
+                .orElseThrow(ParkingLotFullException::new).park(car);
     }
 
     @Override
     public Car pick(Ticket ticket) throws TicketInvalidException {
-        for (ParkingAble parkingAble : parkingAbleList) {
-            if (parkingAble.contains(ticket)) {
-                return parkingAble.pick(ticket);
-            }
-        }
-        throw new TicketInvalidException();
+        return parkingAbleList.stream()
+                .filter(parkingAble -> parkingAble.contains(ticket))
+                .findFirst()
+                .orElseThrow(TicketInvalidException::new).pick(ticket);
     }
 }
