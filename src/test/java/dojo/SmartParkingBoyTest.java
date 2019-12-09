@@ -4,8 +4,7 @@ import dojo.exception.ParkingLotFullException;
 import dojo.exception.TicketInvalidException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SmartParkingBoyTest {
 
@@ -74,6 +73,21 @@ class SmartParkingBoyTest {
         assertSame(car2, parkingLot2.pick(ticket2));
         assertSame(car3, parkingLot1.pick(ticket3));
         assertSame(car4, parkingLot2.pick(ticket4));
+    }
+
+    @Test
+    void test_should_fail_when_park_a_car_given_two_parking_lots_both_full() throws ParkingLotFullException {
+        ParkingLot parkingLot1 = new ParkingLot(2);
+        parkingLot1.park(new Car());
+        parkingLot1.park(new Car());
+
+        ParkingLot parkingLot2 = new ParkingLot(2);
+        parkingLot2.park(new Car());
+        parkingLot2.park(new Car());
+
+        SmartParkingBoy parkingBoy = new SmartParkingBoy(parkingLot1, parkingLot2);
+
+        assertThrows(ParkingLotFullException.class, () -> parkingBoy.park(new Car()));
     }
 
 }
