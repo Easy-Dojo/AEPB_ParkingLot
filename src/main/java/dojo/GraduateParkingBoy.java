@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GraduateParkingBoy {
+public class GraduateParkingBoy implements ParkingAble {
     protected List<ParkingLot> parkingLotList = new ArrayList<>();
 
     public GraduateParkingBoy(ParkingLot ...parkingLots) {
         this.parkingLotList.addAll(Arrays.asList(parkingLots));
     }
 
+    @Override
     public Ticket park(Car car) throws ParkingLotFullException {
         for (ParkingLot lot : parkingLotList) {
             if (!lot.isParkingLotFull()) {
@@ -21,6 +22,11 @@ public class GraduateParkingBoy {
             }
         }
         throw new ParkingLotFullException();
+    }
+
+    @Override
+    public boolean isFull() {
+        return parkingLotList.stream().allMatch(ParkingAble::isFull);
     }
 
     public Car pick(Ticket myTicket) throws TicketInvalidException {

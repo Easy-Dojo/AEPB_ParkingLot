@@ -5,7 +5,7 @@ import dojo.exception.TicketInvalidException;
 
 import java.util.HashMap;
 
-public class ParkingLot {
+public class ParkingLot implements ParkingAble {
     private int space;
     private HashMap<Ticket, Car> parkedCars = new HashMap<>();
 
@@ -39,6 +39,7 @@ public class ParkingLot {
         return space - parkedCars.size();
     }
 
+    @Override
     public boolean isFull() {
         return parkedCars.size() >= space;
     }

@@ -29,4 +29,15 @@ class ParkingManagerTest {
         assertThrows(ParkingLotFullException.class, () -> parkingManager.park(new Car()));
     }
 
+    @Test
+    void test_should_park_successfully_when_park_given_parking_boy_managed_parking_lot_has_space() throws ParkingLotFullException, TicketInvalidException {
+        ParkingLot parkingLot = new ParkingLot(1);
+        ParkingAble parkingBoy = new SuperParkingBoy(parkingLot);
+
+        ParkingManager parkingManager = new ParkingManager(parkingBoy);
+        Car car = new Car();
+        Ticket ticket = parkingManager.park(car);
+        assertSame(car, parkingLot.pick(ticket));
+    }
+
 }
