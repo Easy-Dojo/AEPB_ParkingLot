@@ -83,4 +83,20 @@ class ParkingManagerTest {
 
         assertSame(myCar, parkingManager.pick(ticket));
     }
+
+    @Test
+    void test_should_pick_my_car_when_pick_given_multiple_parking_lots_contains_my_car() throws ParkingLotFullException, TicketInvalidException {
+        ParkingAble parkingLot = new ParkingLot(2);
+        ParkingAble parkingLot2 = new ParkingLot(2);
+        parkingLot.park(new Car());
+        parkingLot2.park(new Car());
+
+        Car myCar = new Car();
+
+        Ticket ticket = parkingLot2.park(myCar);
+
+        ParkingManager parkingManager = new ParkingManager(parkingLot, parkingLot2);
+
+        assertSame(myCar, parkingManager.pick(ticket));
+    }
 }
