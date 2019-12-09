@@ -2,6 +2,7 @@ package dojo;
 
 import dojo.exception.ParkingLotFullException;
 import dojo.exception.TicketInvalidException;
+import dojo.service.ParkingService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,9 +25,6 @@ public class ParkingManager extends ParkingBoy {
 
     @Override
     public Car pick(Ticket ticket) throws TicketInvalidException {
-        return parkingAbleList.stream()
-                .filter(parkingAble -> parkingAble.contains(ticket))
-                .findFirst()
-                .orElseThrow(TicketInvalidException::new).pick(ticket);
+        return ParkingService.pick(parkingAbleList, ticket);
     }
 }
