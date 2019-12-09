@@ -25,7 +25,7 @@ public class GraduateParkingBoy {
 
     public Car pick(Ticket myTicket) throws TicketInvalidException {
         for (ParkingLot parkingLot : parkingLotList) {
-            if (parkingLot.getParkedCars().containsKey(myTicket)) {
+            if (parkingLot.contains(myTicket)) {
                 return parkingLot.pick(myTicket);
             }
         }

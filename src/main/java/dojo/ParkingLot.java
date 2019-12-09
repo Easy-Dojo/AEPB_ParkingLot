@@ -4,7 +4,6 @@ import dojo.exception.ParkingLotFullException;
 import dojo.exception.TicketInvalidException;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class ParkingLot {
     private int space;
@@ -12,10 +11,6 @@ public class ParkingLot {
 
     public ParkingLot(int space) {
         this.space = space;
-    }
-
-    public Map<Ticket, Car> getParkedCars() {
-        return parkedCars;
     }
 
     public Ticket park(Car car) throws ParkingLotFullException {
@@ -33,7 +28,7 @@ public class ParkingLot {
     }
 
     public Car pick(Ticket ticket) throws TicketInvalidException {
-        if (parkedCars.containsKey(ticket)) {
+        if (contains(ticket)) {
             return parkedCars.remove(ticket);
         }
 
@@ -46,5 +41,9 @@ public class ParkingLot {
 
     public boolean isFull() {
         return parkedCars.size() >= space;
+    }
+
+    public boolean contains(Ticket myTicket) {
+        return parkedCars.containsKey(myTicket);
     }
 }
