@@ -71,4 +71,16 @@ class ParkingManagerTest {
 
         assertThrows(ParkingLotFullException.class, () -> parkingManager.park(new Car()));
     }
+
+    @Test
+    void test_should_pick_my_car_when_pick_given_a_parking_lot_contains_my_car() throws ParkingLotFullException, TicketInvalidException {
+        ParkingAble parkingLot = new ParkingLot(2);
+        parkingLot.park(new Car());
+        Car myCar = new Car();
+        Ticket ticket = parkingLot.park(myCar);
+
+        ParkingManager parkingManager = new ParkingManager(parkingLot);
+
+        assertSame(myCar, parkingManager.pick(ticket));
+    }
 }

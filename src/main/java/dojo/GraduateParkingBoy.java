@@ -29,6 +29,11 @@ public class GraduateParkingBoy implements ParkingAble {
         return parkingLotList.stream().allMatch(ParkingAble::isFull);
     }
 
+    @Override
+    public boolean contains(Ticket ticket) {
+        return parkingLotList.stream().anyMatch(parkingLot -> parkingLot.contains(ticket));
+    }
+
     public Car pick(Ticket myTicket) throws TicketInvalidException {
         for (ParkingLot parkingLot : parkingLotList) {
             if (parkingLot.contains(myTicket)) {

@@ -13,6 +13,7 @@ public class ParkingLot implements ParkingAble {
         this.space = space;
     }
 
+    @Override
     public Ticket park(Car car) throws ParkingLotFullException {
         Ticket ticket = new Ticket();
         if (isParkingLotFull()) {
@@ -44,6 +45,7 @@ public class ParkingLot implements ParkingAble {
         return parkedCars.size() >= space;
     }
 
+    @Override
     public boolean contains(Ticket myTicket) {
         return parkedCars.containsKey(myTicket);
     }
