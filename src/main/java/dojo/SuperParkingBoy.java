@@ -5,7 +5,7 @@ import dojo.exception.ParkingLotFullException;
 
 import java.util.Comparator;
 
-public class SuperParkingBoy extends GraduateParkingBoy {
+public class SuperParkingBoy extends ParkingBoy {
 
     public SuperParkingBoy(ParkingLot... parkingLots) {
         super(parkingLots);
